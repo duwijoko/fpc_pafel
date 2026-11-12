@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FPC - Family Padel Community | Official Community Hub</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-forest">
+  <!-- Top Announcement Bar -->
+  <aside class="top-bar">
+    <div class="container top-bar-content">
+      <span class="badge-pill"><i data-lucide="sparkles"></i> Open Registration</span>
+      <p class="announcement-text">Selamat Datang di <strong>Family Padel Community (FPC)</strong> &mdash; Main Seru, Sehat & Guyub Bareng Keluarga!</p>
+      <div class="theme-switch-wrapper">
+        <span class="theme-label">Jersey Kit:</span>
+        <button id="btnThemeForest" class="theme-btn active" title="Home Jersey (Forest Emerald)">Home</button>
+        <button id="btnThemeWhite" class="theme-btn" title="Away Jersey (Crisp White)">Away</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navigation -->
+  <header class="site-header" id="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="brand-logo">
+        <div class="logo-badge-container">
+          <img src="C:/Users/duwijoko/.gemini/antigravity/brain/ca2c9bb7-7ef3-48ac-9d38-b439d40d48db/.user_uploaded/media_1793675884745_f78591ca.jpg" alt="FPC Logo" class="brand-img" onerror="this.src='https://placehold.co/80x80/0d3b2e/d4af37?text=FPC'">
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">FAMILY PADEL</span>
+          <span class="brand-sub">COMMUNITY • EST. 2024</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="desktop-nav">
+        <a href="#about" class="nav-link"><i data-lucide="info"></i> Tentang FPC</a>
+        <a href="#schedule" class="nav-link"><i data-lucide="calendar"></i> Jadwal Main</a>
+        <a href="#jersey" class="nav-link"><i data-lucide="shirt"></i> Jersey Kit</a>
+        <a href="#community" class="nav-link"><i data-lucide="users"></i> Komunitas & Reclub</a>
+        <button class="btn btn-gold btn-sm" onclick="openAdminModal()">
+          <i data-lucide="plus-circle"></i> + Buat Jadwal
+        </button>
+      </nav>
+
+      <!-- Mobile Actions -->
+      <div class="mobile-header-actions">
+        <button class="btn btn-gold-outline btn-xs" onclick="openAdminModal()">
+          <i data-lucide="calendar-plus"></i> Input Jadwal
+        </button>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <nav class="mobile-nav-links">
+        <a href="#about" class="mobile-link" onclick="closeDrawer()"><i data-lucide="info"></i> Tentang FPC</a>
+        <a href="#schedule" class="mobile-link" onclick="closeDrawer()"><i data-lucide="calendar"></i> Jadwal Main</a>
+        <a href="#jersey" class="mobile-link" onclick="closeDrawer()"><i data-lucide="shirt"></i> Official Jersey</a>
+        <a href="#community" class="mobile-link" onclick="closeDrawer()"><i data-lucide="users"></i> Komunitas & Reclub</a>
+        <div class="drawer-footer">
+          <button class="btn btn-forest w-100 mb-2" onclick="openAdminModal(); closeDrawer();">
+            <i data-lucide="plus-circle"></i> Input Jadwal Admin
+          </button>
+          <button class="btn btn-outline w-100 mb-2" onclick="openGithubModal(); closeDrawer();">
+            <i data-lucide="github"></i> GitHub Cloud Sync
+          </button>
+          <a href="https://reclub.co" target="_blank" class="btn btn-outline w-100">
+            <i data-lucide="external-link"></i> Buka Reclub Hub
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="home">
+    <div class="hero-overlay"></div>
+    <div class="pinstripe-pattern"></div>
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i data-lucide="award"></i> Official Family Padel Community
+        </div>
+        <h1 class="hero-title">
+          Kekeluargaan, Kesehatan, & <span class="highlight-gold">Semangat Padel</span>
+        </h1>
+        <p class="hero-desc">
+          Komunitas padel inklusif untuk semua usia dan level. Temukan teman mabar, asah kemampuan bersama pelatih, dan gabung ke sesi main mingguan FPC dengan mudah dan fleksibel!
+        </p>
+        <div class="hero-cta-group">
+          <a href="#schedule" class="btn btn-gold btn-lg shadow-gold">
+            <i data-lucide="calendar-check"></i> Lihat Jadwal & Join Sesi
+          </a>
+          <a href="#about" class="btn btn-glass btn-lg">
+            <i data-lucide="heart-handshake"></i> Kenal Lebih Dekat
+          </a>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">250+</div>
+            <div class="stat-label">Member Aktif</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">12+</div>
+            <div class="stat-label">Sesi Mingguan</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Friendly & Family</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual with Jersey & Badge Feature -->
+      <div class="hero-showcase">
+        <div class="jersey-card-preview">
+          <div class="badge-floating">
+            <img src="C:/Users/duwijoko/.gemini/antigravity/brain/ca2c9bb7-7ef3-48ac-9d38-b439d40d48db/.user_uploaded/media_1793675884745_f78591ca.jpg" alt="Logo Crest">
+          </div>
+          <div class="jersey-images-duo">
+            <div class="jersey-img-wrap primary-img">
+              <img src="C:/Users/duwijoko/.gemini/antigravity/brain/ca2c9bb7-7ef3-48ac-9d38-b439d40d48db/.user_uploaded/media_1793675884703_54fdd36c.jpg" alt="FPC Home Green Jersey">
+              <span class="jersey-tag tag-home">Home Forest Kit</span>
+            </div>
+            <div class="jersey-img-wrap secondary-img">
+              <img src="C:/Users/duwijoko/.gemini/antigravity/brain/ca2c9bb7-7ef3-48ac-9d38-b439d40d48db/.user_uploaded/media_1793675884696_abfff689.jpg" alt="FPC Away White Jersey">
+              <span class="jersey-tag tag-away">Away Pinstripe Kit</span>
+            </div>
+          </div>
+          <div class="jersey-card-caption">
+            <h4>Official Kit FPC 2024/2025</h4>
+            <p>Elegansi Hijau Hutan & Putih Bergaris Klasik</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Informasi Tentang FPC -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-tag"><i data-lucide="shield-check"></i> Identity & Values</span>
+        <h2 class="section-title">Tentang Family Padel Community (FPC)</h2>
+        <div class="title-accent-bar"></div>
+        <p class="section-subtitle">
+          Bukan sekadar klub olahraga, FPC adalah rumah kedua bagi siapa saja yang ingin menikmati olahraga padel dalam suasana yang hangat, suportif, dan ramah keluarga.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <!-- Visi & Misi Card -->
+        <div class="glass-card about-card">
+          <div class="card-icon-bubble">
+            <i data-lucide="target"></i>
+          </div>
+          <h3>Visi Kami</h3>
+          <p>
+            Membangun ekosistem olahraga padel paling ramah keluarga di Indonesia, di mana orang tua, anak, sahabat, dan pemula dapat bermain bersama tanpa batasan tingkat kemampuan.
+          </p>
+        </div>
+
+        <!-- Nilai Kekeluargaan -->
+        <div class="glass-card about-card highlight-card">
+          <div class="card-icon-bubble gold-bubble">
+            <i data-lucide="heart"></i>
+          </div>
+          <h3>Nilai & Filosofi</h3>
+          <ul class="value-list">
+            <li><strong>Family First:</strong> Lingkungan aman, positif, dan menyenangkan untuk rekreasi keluarga.</li>
+            <li><strong>Inclusive Play:</strong> Dari yang baru pertama kali pegang raket hingga pemain intermediate & advance.</li>
+            <li><strong>Fair & Sportsmanship:</strong> Semangat bertanding yang sehat berlandaskan persaudaraan.</li>
+          </ul>
+        </div>
+
+        <!-- Program Unggulan -->
+        <div class="glass-card about-card">
+          <div class="card-icon-bubble">
+            <i data-lucide="activity"></i>
+          </div>
+          <h3>Aktivitas Rutin FPC</h3>
+          <p>
+            Sesi Mabar Reguler (Weekday & Weekend), Clinic Coaching Fundamental untuk pemula, Family Fun Tournament bulanan, serta gathering santai selepas sesi di cafe court.
+          </p>
+        </div>
+      </div>
+
+      <!-- Filosofi Jersey -->
+      <div class="jersey-philosophy-card mt-5" id="jersey">
+        <div class="philosophy-header">
+          <div class="badge-icon"><i data-lucide="palette"></i></div>
+          <div>
+            <h3>Filosofi Warna Official Jersey FPC</h3>
+            <p>Desain klasik pinstripe dengan paduan 2 warna elegan:</p>
+          </div>
+        </div>
+        <div class="philosophy-grid">
+          <div class="color-spec-box color-spec-green">
+            <div class="color-sample green-sample"></div>
+            <div class="color-details">
+              <h4>Forest Court Emerald (#0d3b2e)</h4>
+              <p>Mencerminkan ketenangan, konsentrasi di dalam lapangan, ketangguhan mental, dan keharmonisan keluarga yang sejuk dan teduh.</p>
+            </div>
+          </div>
+          <div class="color-spec-box color-spec-white">
+            <div class="color-sample white-sample"></div>
+            <div class="color-details">
+              <h4>Crisp Pinstripe White (#ffffff & #0d3b2e)</h4>
+              <p>Melambangkan sportivitas murni, transparansi, kesegaran energi baru, serta garis lapangan padel yang selalu siap dijelajahi.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Jadwal & Booking Sesi (Fitur Input Jadwal & Join Sesi) -->
+  <section class="section schedule-section" id="schedule">
+    <div class="container">
+      <div class="schedule-header-row">
+        <div>
+          <span class="section-tag"><i data-lucide="calendar"></i> Sesi Mendatang</span>
+          <h2 class="section-title">Jadwal Mabar & Booking Slot FPC</h2>
+          <p class="section-subtitle">
+            Pilih sesi yang sesuai dengan level dan waktumu. Slot otomatis ter-update dan terkoneksi langsung dengan Reclub & konfirmasi instan!
+          </p>
+        </div>
+        <div class="schedule-actions-desktop">
+          <button class="btn btn-outline btn-sm" id="btnGithubSyncBadge" onclick="openGithubModal()" title="Pengaturan GitHub Database Cloud">
+            <i data-lucide="github"></i> <span id="syncStatusLabel">GitHub Sync: Offline</span>
+          </button>
+          <button class="btn btn-gold" onclick="openAdminModal()">
+            <i data-lucide="plus-circle"></i> Input Jadwal Baru (Admin)
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <button class="filter-pill active" data-filter="all" onclick="filterSchedules('all', this)">Semua Sesi</button>
+          <button class="filter-pill" data-filter="Beginner" onclick="filterSchedules('Beginner', this)">Beginner Friendly</button>
+          <button class="filter-pill" data-filter="Intermediate" onclick="filterSchedules('Intermediate', this)">Intermediate</button>
+          <button class="filter-pill" data-filter="Family Fun" onclick="filterSchedules('Family Fun', this)">Family Fun</button>
+        </div>
+        <div class="search-box">
+          <i data-lucide="search"></i>
+          <input type="text" id="scheduleSearch" placeholder="Cari lokasi / tanggal..." oninput="searchSchedules(this.value)">
+        </div>
+      </div>
+
+      <!-- Schedule Cards Grid -->
+      <div class="schedule-grid" id="scheduleCardsContainer">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Integrasi Reclub & Kemudahan Komunitas -->
+  <section class="section reclub-section" id="community">
+    <div class="container">
+      <div class="reclub-card-banner">
+        <div class="reclub-content">
+          <div class="reclub-tag"><i data-lucide="layers"></i> Smart Ecosystem Sync</div>
+          <h2>Tersinkronisasi dengan Reclub & Sistem Pembayaran Modern</h2>
+          <p>
+            Family Padel Community memudahkan setiap pemain: daftar sesi langsung di website ini, join club FPC di platform <strong>Reclub</strong> untuk tracking ranking dan rating pemain, serta konfirmasi pembayaran otomatis via QRIS (BCA, Mandiri, GoPay, ShopeePay, Dana).
+          </p>
+          <div class="reclub-features-list">
+            <div class="feature-bullet">
+              <i data-lucide="check-circle-2"></i>
+              <span>One-Click Reclub Event Link ke sesi mabar FPC</span>
+            </div>
+            <div class="feature-bullet">
+              <i data-lucide="check-circle-2"></i>
+              <span>Instan E-Ticket / Tiket Digital dengan QR Code & WhatsApp Link</span>
+            </div>
+            <div class="feature-bullet">
+              <i data-lucide="check-circle-2"></i>
+              <span>Transparansi Slot Terisi & Daftar Teman Main</span>
+            </div>
+          </div>
+          <div class="reclub-buttons">
+            <a href="https://reclub.co" target="_blank" class="btn btn-gold btn-md">
+              <i data-lucide="external-link"></i> Gabung FPC di Reclub App
+            </a>
+            <a href="#schedule" class="btn btn-outline-white btn-md">
+              <i data-lucide="arrow-down-circle"></i> Booking Sekarang
+            </a>
+          </div>
+        </div>
+        <div class="reclub-illustration">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <div class="phone-app-header">
+                <span class="phone-time">10:30</span>
+                <span class="phone-badge">Reclub Sync</span>
+              </div>
+              <div class="phone-card">
+                <div class="phone-card-title">Family Padel Community</div>
+                <div class="phone-card-meta">Official Club • 250+ Members</div>
+                <div class="phone-court-badge">Court 1 & 2 Reserved</div>
+                <div class="phone-player-avatars">
+                  <div class="phone-avatar bg-1">DJ</div>
+                  <div class="phone-avatar bg-2">AR</div>
+                  <div class="phone-avatar bg-3">FS</div>
+                  <div class="phone-avatar bg-4">+5</div>
+                </div>
+              </div>
+              <div class="phone-card mini">
+                <div class="text-xs text-muted">Status Pembayaran:</div>
+                <div class="text-sm font-bold text-success"><i data-lucide="check"></i> QRIS Terverifikasi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="C:/Users/duwijoko/.gemini/antigravity/brain/ca2c9bb7-7ef3-48ac-9d38-b439d40d48db/.user_uploaded/media_1793675884745_f78591ca.jpg" alt="FPC Badge" onerror="this.src='https://placehold.co/50x50/0d3b2e/d4af37?text=FPC'">
+          <div>
+            <h3>FAMILY PADEL COMMUNITY</h3>
+            <p>Sehat, Seru, & Guyub Bersama di Lapangan</p>
+          </div>
+        </div>
+        <p class="footer-about">
+          Wadah interaksi dan kebersamaan komunitas olahraga padel keluarga. Berbasis di Indonesia, terbuka bagi siapa saja yang mencintai padel.
+        </p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Menu Cepat</h4>
+        <ul>
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="#about">Tentang FPC</a></li>
+          <li><a href="#schedule">Jadwal Sesi & Booking</a></li>
+          <li><a href="#jersey">Filosofi Jersey</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>Integrasi & Kontak</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="openGithubModal()"><i data-lucide="github"></i> GitHub Cloud Sync</a></li>
+          <li><a href="https://reclub.co" target="_blank"><i data-lucide="external-link"></i> Reclub Profile</a></li>
+          <li><a href="https://wa.me/6281234567890" target="_blank"><i data-lucide="message-circle"></i> WhatsApp Admin FPC</a></li>
+          <li><a href="mailto:halo@familypadel.id"><i data-lucide="mail"></i> info@familypadel.id</a></li>
+          <li><a href="javascript:void(0)" onclick="resetSampleData()"><i data-lucide="rotate-ccw"></i> Reset Data Contoh</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2024-2026 Family Padel Community (FPC). All Rights Reserved. Crafted with Forest & Pinstripe Spirit.</p>
+        <p class="tech-tag">Ultra-Lightweight &bull; Fast PWA Ready &bull; Responsive Multi-Device</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL: Input Jadwal Baru (Admin) -->
+  <div class="modal-backdrop" id="adminModal" onclick="handleBackdropClick(event, 'adminModal')">
+    <div class="modal-box glass-panel">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <i data-lucide="calendar-plus" class="modal-icon text-gold"></i>
+          <div>
+            <h3>Input Jadwal Sesi Padel</h3>
+            <p>Tambah sesi mabar FPC baru ke sistem</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('adminModal')"><i data-lucide="x"></i></button>
+      </div>
+
+      <form id="formAddSchedule" onsubmit="handleScheduleSubmit(event)">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="schedTitle">Nama Sesi / Tema <span class="req">*</span></label>
+            <input type="text" id="schedTitle" required placeholder="Contoh: Weekend Morning Family Padel Cup" value="Weekend Morning Padel Session">
+          </div>
+
+          <div class="form-group">
+            <label for="schedDate">Tanggal <span class="req">*</span></label>
+            <input type="date" id="schedDate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="schedTime">Waktu Main <span class="req">*</span></label>
+            <input type="text" id="schedTime" required placeholder="08:00 - 10:00 WIB" value="08:00 - 10:00 WIB">
+          </div>
+
+          <div class="form-group">
+            <label for="schedVenue">Nama Lapangan / Venue <span class="req">*</span></label>
+            <input type="text" id="schedVenue" required placeholder="Contoh: Kemang Padel Court / Cilandak" value="Kemang Padel Arena">
+          </div>
+
+          <div class="form-group">
+            <label for="schedCourt">Nomor Lapangan</label>
+            <input type="text" id="schedCourt" placeholder="Court 1 & 2" value="Court 1 (Panoramic)">
+          </div>
+
+          <div class="form-group">
+            <label for="schedLevel">Level Permainan <span class="req">*</span></label>
+            <select id="schedLevel" required>
+              <option value="All Level / Fun">All Level / Fun (Cocok Semua)</option>
+              <option value="Beginner">Beginner Friendly (Pemula)</option>
+              <option value="Intermediate">Intermediate (Kompetitif Ramah)</option>
+              <option value="Family Fun">Family Fun (Orang Tua & Anak)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="schedMaxPlayers">Slot Maksimal Pemain <span class="req">*</span></label>
+            <input type="number" id="schedMaxPlayers" required min="2" max="16" value="4">
+          </div>
+
+          <div class="form-group">
+            <label for="schedFee">Biaya per Orang (IDR) <span class="req">*</span></label>
+            <input type="number" id="schedFee" required min="0" step="5000" value="125000" placeholder="125000">
+          </div>
+
+          <div class="form-group">
+            <label for="schedReclubUrl">Link Reclub Event (Opsional)</label>
+            <input type="url" id="schedReclubUrl" placeholder="https://reclub.co/events/..." value="https://reclub.co">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="schedNotes">Catatan / Fasilitas Termasuk</label>
+            <textarea id="schedNotes" rows="2" placeholder="Termasuk bola baru Bullpadel, air mineral, dan coaching tip."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('adminModal')">Batal</button>
+          <button type="submit" class="btn btn-gold"><i data-lucide="check"></i> Terbitkan Jadwal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Join Sesi & Integrasi Pembayaran / Reclub -->
+  <div class="modal-backdrop" id="joinModal" onclick="handleBackdropClick(event, 'joinModal')">
+    <div class="modal-box glass-panel modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <i data-lucide="user-plus" class="modal-icon text-gold"></i>
+          <div>
+            <h3 id="joinModalTitle">Join Sesi Padel FPC</h3>
+            <p id="joinModalSubtitle">Isi data pemain & konfirmasi slot kamu</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('joinModal')"><i data-lucide="x"></i></button>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="step-indicator">
+        <div class="step-node active" id="step1Indicator">
+          <span class="step-num">1</span>
+          <span class="step-txt">Data Pemain</span>
+        </div>
+        <div class="step-line" id="stepLine1"></div>
+        <div class="step-node" id="step2Indicator">
+          <span class="step-num">2</span>
+          <span class="step-txt">Pembayaran & Reclub</span>
+        </div>
+        <div class="step-line" id="stepLine2"></div>
+        <div class="step-node" id="step3Indicator">
+          <span class="step-num">3</span>
+          <span class="step-txt">E-Ticket Sukses</span>
+        </div>
+      </div>
+
+      <!-- STEP 1: Form Data Diri -->
+      <div id="joinStep1">
+        <!-- Session Summary Box -->
+        <div class="session-brief-box" id="joinBriefBox">
+          <!-- Filled by JS -->
+        </div>
+
+        <form id="formJoinPlayer" onsubmit="goToPaymentStep(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="joinPlayerName">Nama Lengkap Pemain <span class="req">*</span></label>
+              <input type="text" id="joinPlayerName" required placeholder="Contoh: Dimas Bagus">
+            </div>
+
+            <div class="form-group">
+              <label for="joinPlayerWa">Nomor WhatsApp Aktif <span class="req">*</span></label>
+              <input type="tel" id="joinPlayerWa" required placeholder="Contoh: 081234567890">
+            </div>
+
+            <div class="form-group">
+              <label for="joinPlayerLevel">Level Kemampuan Anda <span class="req">*</span></label>
+              <select id="joinPlayerLevel" required>
+                <option value="Beginner">Beginner (Baru mulai / Fun)</option>
+                <option value="Intermediate">Intermediate (Bisa rally konsisten)</option>
+                <option value="Upper Intermediate">Upper Intermediate</option>
+                <option value="Advanced">Advanced (Kompetitif)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="joinReclubUsername">Username Reclub (Opsional)</label>
+              <input type="text" id="joinReclubUsername" placeholder="@username_reclub">
+            </div>
+
+            <div class="form-group full-width">
+              <label for="joinPlayerNotes">Catatan Khusus (Sewa raket, datang berdua, dll)</label>
+              <input type="text" id="joinPlayerNotes" placeholder="Contoh: Butuh sewa raket FPC">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" onclick="closeModal('joinModal')">Batal</button>
+            <button type="submit" class="btn btn-gold">
+              Lanjut ke Pembayaran <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 2: Pembayaran & Reclub -->
+      <div id="joinStep2" style="display: none;">
+        <div class="payment-layout">
+          <!-- Left: Payment Options -->
+          <div class="payment-methods">
+            <h4 class="mb-3">Pilih Metode Pembayaran:</h4>
+            
+            <div class="payment-option selected" onclick="selectPaymentMethod('qris', this)">
+              <div class="payment-opt-header">
+                <div class="radio-circle checked"></div>
+                <strong>QRIS Instan (Semua Bank & E-Wallet)</strong>
+              </div>
+              <p class="text-xs text-muted">BCA, Mandiri, BNI, BRI, GoPay, OVO, Dana, ShopeePay</p>
+            </div>
+
+            <div class="payment-option" onclick="selectPaymentMethod('bca', this)">
+              <div class="payment-opt-header">
+                <div class="radio-circle"></div>
+                <strong>Transfer Virtual Account / Bank BCA</strong>
+              </div>
+              <p class="text-xs text-muted">No. Rek: 8830-1234-5678 a.n Family Padel Community</p>
+            </div>
+
+            <div class="payment-option" onclick="selectPaymentMethod('cash_court', this)">
+              <div class="payment-opt-header">
+                <div class="radio-circle"></div>
+                <strong>Bayar di Lapangan (Cash / On the Spot)</strong>
+              </div>
+              <p class="text-xs text-muted">Konfirmasi langsung ke Captain Lapangan FPC</p>
+            </div>
+
+            <!-- Reclub Direct Action Box -->
+            <div class="reclub-action-box mt-3">
+              <div class="reclub-mini-badge">
+                <i data-lucide="link"></i> Terhubung ke Reclub
+              </div>
+              <p class="text-xs">
+                Apakah Anda ingin sesi ini langsung tercatat di profil Reclub Anda?
+              </p>
+              <a id="btnDirectReclubLink" href="https://reclub.co" target="_blank" class="btn btn-xs btn-outline-gold w-100 mt-1">
+                <i data-lucide="external-link"></i> Buka Event di Reclub App
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: Payment Voucher & QR Preview -->
+          <div class="payment-preview-box">
+            <div class="bill-summary">
+              <div class="bill-row">
+                <span>Total Biaya Slot:</span>
+                <strong id="payTotalAmount" class="text-gold text-lg">Rp 125.000</strong>
+              </div>
+              <div class="bill-row text-xs text-muted">
+                <span>Biaya Layanan & Bola:</span>
+                <span>Termasuk (Rp 0)</span>
+              </div>
+            </div>
+
+            <!-- Dynamic QRIS Display -->
+            <div class="qris-display-card" id="qrisDisplayArea">
+              <span class="qris-logo-tag">QRIS NASIONAL</span>
+              <div class="qr-canvas-mock">
+                <!-- SVG Simulated Crisp QR Code -->
+                <svg viewBox="0 0 100 100" class="qr-svg">
+                  <rect width="100" height="100" fill="#ffffff"/>
+                  <rect x="10" y="10" width="25" height="25" fill="#0d3b2e"/>
+                  <rect x="14" y="14" width="17" height="17" fill="#ffffff"/>
+                  <rect x="18" y="18" width="9" height="9" fill="#0d3b2e"/>
+                  <rect x="65" y="10" width="25" height="25" fill="#0d3b2e"/>
+                  <rect x="69" y="14" width="17" height="17" fill="#ffffff"/>
+                  <rect x="73" y="18" width="9" height="9" fill="#0d3b2e"/>
+                  <rect x="10" y="65" width="25" height="25" fill="#0d3b2e"/>
+                  <rect x="14" y="69" width="17" height="17" fill="#ffffff"/>
+                  <rect x="18" y="73" width="9" height="9" fill="#0d3b2e"/>
+                  <!-- Pattern Dots -->
+                  <circle cx="45" cy="20" r="3" fill="#c9a24d"/>
+                  <circle cx="53" cy="28" r="3" fill="#0d3b2e"/>
+                  <circle cx="45" cy="45" r="4" fill="#0d3b2e"/>
+                  <circle cx="55" cy="55" r="4" fill="#c9a24d"/>
+                  <circle cx="70" cy="45" r="3" fill="#0d3b2e"/>
+                  <circle cx="45" cy="70" r="3" fill="#0d3b2e"/>
+                  <circle cx="75" cy="75" r="5" fill="#0d3b2e"/>
+                  <circle cx="85" cy="85" r="3" fill="#c9a24d"/>
+                </svg>
+              </div>
+              <p class="text-xs text-center mt-2">Scan dengan aplikasi BCA / GoPay / OVO / Dana / Livin</p>
+              <div class="payment-timer text-center text-xs">
+                Selesaikan dalam <strong id="payTimer">14:59</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer mt-4">
+          <button type="button" class="btn btn-outline" onclick="goToStep(1)">
+            <i data-lucide="arrow-left"></i> Kembali
+          </button>
+          <button type="button" class="btn btn-forest" onclick="confirmPaymentAndFinish()">
+            <i data-lucide="check-check"></i> Saya Sudah Bayar / Konfirmasi Slot
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: E-Ticket Sukses -->
+      <div id="joinStep3" style="display: none;">
+        <div class="success-ticket-container">
+          <div class="ticket-celebration">
+            <div class="success-icon-wrap">
+              <i data-lucide="check-circle" class="text-gold"></i>
+            </div>
+            <h3>Pendaftaran Sesi Berhasil!</h3>
+            <p>Selamat bergabung di sesi Family Padel Community!</p>
+          </div>
+
+          <!-- Digital Court Pass -->
+          <div class="digital-ticket-card">
+            <div class="ticket-header">
+              <div>
+                <span class="ticket-badge">FPC OFFICIAL PASS</span>
+                <h4 id="ticketSessionName">Weekend Morning Session</h4>
+              </div>
+              <div class="ticket-logo-mini">FPC</div>
+            </div>
+            <div class="ticket-body">
+              <div class="ticket-row">
+                <div>
+                  <span class="ticket-label">Nama Pemain:</span>
+                  <div class="ticket-val" id="ticketPlayerName">Dimas Bagus</div>
+                </div>
+                <div>
+                  <span class="ticket-label">Level:</span>
+                  <div class="ticket-val" id="ticketPlayerLevel">Beginner</div>
+                </div>
+              </div>
+              <div class="ticket-row mt-2">
+                <div>
+                  <span class="ticket-label">Waktu & Tanggal:</span>
+                  <div class="ticket-val" id="ticketDateTime">Sabtu, 08:00 - 10:00 WIB</div>
+                </div>
+                <div>
+                  <span class="ticket-label">Venue & Court:</span>
+                  <div class="ticket-val" id="ticketVenue">Kemang Padel - Court 1</div>
+                </div>
+              </div>
+              <div class="ticket-row mt-2">
+                <div>
+                  <span class="ticket-label">Kode Booking:</span>
+                  <div class="ticket-val text-gold" id="ticketBookingCode">FPC-88921</div>
+                </div>
+                <div>
+                  <span class="ticket-label">Status:</span>
+                  <span class="badge-status-confirmed">CONFIRMED</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ticket-actions mt-4">
+            <button class="btn btn-forest" id="btnShareWa" onclick="shareTicketToWhatsApp()">
+              <i data-lucide="message-circle"></i> Kirim Tiket ke WhatsApp
+            </button>
+            <button class="btn btn-gold" onclick="closeModal('joinModal')">
+              Selesai & Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GitHub Cloud Database Settings -->
+  <div class="modal-backdrop" id="githubModal" onclick="handleBackdropClick(event, 'githubModal')">
+    <div class="modal-box glass-panel">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <i data-lucide="github" class="modal-icon text-gold"></i>
+          <div>
+            <h3>Integrasi GitHub Cloud Database</h3>
+            <p>Sinkronisasi jadwal mabar langsung dengan repository GitHub Anda</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('githubModal')"><i data-lucide="x"></i></button>
+      </div>
+
+      <div class="github-sync-info-banner mb-3">
+        <div class="sync-banner-icon"><i data-lucide="database"></i></div>
+        <div>
+          <strong>Arsitektur Git-as-a-Database:</strong>
+          <p class="text-xs text-muted">Jadwal disimpan dalam file <code>data/schedules.json</code> di GitHub. Setiap member yang membuka website akan otomatis membaca jadwal terbaru dari GitHub secara realtime & 100% gratis!</p>
+        </div>
+      </div>
+
+      <form id="formGithubConfig" onsubmit="handleGithubConfigSubmit(event)">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="ghRepo">GitHub Repository (Username/Nama-Repo) <span class="req">*</span></label>
+            <input type="text" id="ghRepo" placeholder="contoh: duwijoko/fpc-family-padel-community" required>
+            <span class="text-xs text-muted">Format: <code>username/repository-anda</code></span>
+          </div>
+
+          <div class="form-group">
+            <label for="ghBranch">Branch</label>
+            <input type="text" id="ghBranch" value="main" placeholder="main">
+          </div>
+
+          <div class="form-group">
+            <label for="ghPath">Jalur File Jadwal (Path)</label>
+            <input type="text" id="ghPath" value="data/schedules.json" placeholder="data/schedules.json">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="ghToken">GitHub Personal Access Token (PAT) <span class="text-muted">(Khusus Admin untuk Update)</span></label>
+            <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <span class="text-xs text-muted">
+              💡 <em>Catatan:</em> Token hanya disimpan di peramban Anda (LocalStorage) untuk mengizinkan admin menerbitkan atau menghapus jadwal langsung ke GitHub. Pengunjung biasa tidak memerlukan token untuk membaca jadwal.
+            </span>
+          </div>
+        </div>
+
+        <div class="github-status-box mt-3" id="githubStatusBox">
+          <div class="status-indicator-dot" id="ghStatusDot"></div>
+          <span class="text-xs" id="ghStatusText">Belum terhubung ke repository GitHub.</span>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="fetchSchedulesFromGithub(true)">
+            <i data-lucide="refresh-cw"></i> Tarik Data Sekarang
+          </button>
+          <button type="submit" class="btn btn-forest">
+            <i data-lucide="save"></i> Simpan Pengaturan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
