@@ -23,6 +23,9 @@
         <span class="theme-label">Jersey Kit:</span>
         <button id="btnThemeForest" class="theme-btn active" title="Home Jersey (Forest Emerald)">Home</button>
         <button id="btnThemeWhite" class="theme-btn" title="Away Jersey (Crisp White)">Away</button>
+        <button class="theme-btn" id="topBarAdminBtn" onclick="openAdminAuthModal()" title="Login Khusus Pengurus FPC" style="margin-left: 0.5rem; background: rgba(201, 162, 77, 0.2); border-color: var(--fpc-gold); color: var(--fpc-gold-light);">
+          <i data-lucide="lock" style="width: 11px; height: 11px; display: inline-block; vertical-align: middle;"></i> Akses Admin
+        </button>
       </div>
     </div>
   </aside>
@@ -46,16 +49,16 @@
         <a href="#schedule" class="nav-link"><i data-lucide="calendar"></i> Jadwal Main</a>
         <a href="#jersey" class="nav-link"><i data-lucide="shirt"></i> Jersey Kit</a>
         <a href="#community" class="nav-link"><i data-lucide="users"></i> Komunitas & Reclub</a>
-        <button class="btn btn-gold btn-sm" onclick="openAdminModal()">
-          <i data-lucide="plus-circle"></i> + Buat Jadwal
-        </button>
+        <a href="#schedule" class="btn btn-gold btn-sm">
+          <i data-lucide="calendar-check"></i> Booking Slot
+        </a>
       </nav>
 
       <!-- Mobile Actions -->
       <div class="mobile-header-actions">
-        <button class="btn btn-gold-outline btn-xs" onclick="openAdminModal()">
-          <i data-lucide="calendar-plus"></i> Input Jadwal
-        </button>
+        <a href="#schedule" class="btn btn-gold-outline btn-xs">
+          <i data-lucide="calendar"></i> Booking
+        </a>
         <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
           <i data-lucide="menu"></i>
         </button>
@@ -69,14 +72,12 @@
         <a href="#schedule" class="mobile-link" onclick="closeDrawer()"><i data-lucide="calendar"></i> Jadwal Main</a>
         <a href="#jersey" class="mobile-link" onclick="closeDrawer()"><i data-lucide="shirt"></i> Official Jersey</a>
         <a href="#community" class="mobile-link" onclick="closeDrawer()"><i data-lucide="users"></i> Komunitas & Reclub</a>
+        <a href="javascript:void(0)" class="mobile-link" id="mobileDrawerAdminLink" onclick="toggleAdminAuthModal(); closeDrawer();"><i data-lucide="shield-check"></i> <span id="mobileAdminLabel">Akses Pengurus FPC</span></a>
         <div class="drawer-footer">
-          <button class="btn btn-forest w-100 mb-2" onclick="openAdminModal(); closeDrawer();">
-            <i data-lucide="plus-circle"></i> Input Jadwal Admin
-          </button>
-          <button class="btn btn-outline w-100 mb-2" onclick="openGithubModal(); closeDrawer();">
-            <i data-lucide="github"></i> GitHub Cloud Sync
-          </button>
-          <a href="https://reclub.co" target="_blank" class="btn btn-outline w-100">
+          <a href="#schedule" class="btn btn-gold w-100 mb-2" onclick="closeDrawer();">
+            <i data-lucide="calendar-check"></i> Booking Slot Sekarang
+          </a>
+          <a href="https://reclub.co/clubs/@family-padel-community" target="_blank" class="btn btn-outline w-100">
             <i data-lucide="external-link"></i> Buka Reclub Hub
           </a>
         </div>
@@ -97,7 +98,7 @@
           Kekeluargaan, Kesehatan, & <span class="highlight-gold">Semangat Padel</span>
         </h1>
         <p class="hero-desc">
-          Komunitas padel inklusif untuk semua usia dan level. Temukan teman mabar, asah kemampuan bersama pelatih, dan gabung ke sesi main mingguan FPC dengan mudah dan fleksibel!
+          Komunitas padel inklusif untuk semua usia dan level. Temukan teman mabar, saling berbagi teknik dasar bersama member lain, dan gabung ke sesi main mingguan FPC dengan mudah dan fleksibel!
         </p>
         <div class="hero-cta-group">
           <a href="#schedule" class="btn btn-gold btn-lg shadow-gold">
@@ -196,7 +197,7 @@
           </div>
           <h3>Aktivitas Rutin FPC</h3>
           <p>
-            Sesi Mabar Reguler (Weekday & Weekend), Clinic Coaching Fundamental untuk pemula, Family Fun Tournament bulanan, serta gathering santai selepas sesi di cafe court.
+            Sesi Mabar Reguler (Weekend), Sharing session Fundamental untuk pemula atau yang baru pertama kali mencoba olahraga padel (Bukan Coaching Clinic), serta gathering santai selepas sesi di cafe court.
           </p>
         </div>
       </div>
@@ -238,16 +239,41 @@
           <span class="section-tag"><i data-lucide="calendar"></i> Sesi Mendatang</span>
           <h2 class="section-title">Jadwal Mabar & Booking Slot FPC</h2>
           <p class="section-subtitle">
-            Pilih sesi yang sesuai dengan level dan waktumu. Slot otomatis ter-update dan terkoneksi langsung dengan Reclub & konfirmasi instan!
+            Pilih sesi yang sesuai dengan level dan waktumu. Klik tombol "Join Sesi di Reclub" untuk langsung bergabung ke acara di aplikasi Reclub FPC!
           </p>
         </div>
-        <div class="schedule-actions-desktop">
-          <button class="btn btn-outline btn-sm" id="btnGithubSyncBadge" onclick="openGithubModal()" title="Pengaturan GitHub Database Cloud">
-            <i data-lucide="github"></i> <span id="syncStatusLabel">GitHub Sync: Offline</span>
+      </div>
+
+      <!-- BAR AKSES KHUSUS PENGURUS (Jelas & Mudah Ditemukan) -->
+      <div class="admin-access-bar mb-4" id="adminBarContainer">
+        <!-- Tampilan Saat Mode Pengunjung Biasa -->
+        <div id="visitorBarView" class="admin-bar-inner">
+          <div class="admin-bar-info">
+            <i data-lucide="shield-check" class="text-gold"></i>
+            <span><strong>Area Pengurus FPC:</strong> Ingin menambah jadwal baru atau sinkronisasi cloud?</span>
+          </div>
+          <button class="btn btn-gold btn-sm" onclick="openAdminAuthModal()">
+            <i data-lucide="lock"></i> Akses Pengurus (Input Jadwal)
           </button>
-          <button class="btn btn-gold" onclick="openAdminModal()">
-            <i data-lucide="plus-circle"></i> Input Jadwal Baru (Admin)
-          </button>
+        </div>
+
+        <!-- Tampilan Saat Pengurus Sudah Login -->
+        <div id="adminBarView" class="admin-bar-inner admin-active-bar" style="display: none;">
+          <div class="admin-bar-info">
+            <span class="badge-status-confirmed"><i data-lucide="shield"></i> Mode Pengurus Aktif</span>
+            <span>Anda memiliki hak akses untuk menambah & menghapus jadwal mabar FPC.</span>
+          </div>
+          <div class="admin-bar-buttons">
+            <button class="btn btn-gold btn-sm" onclick="openAdminModal()">
+              <i data-lucide="plus-circle"></i> + Buat Jadwal Baru
+            </button>
+            <button class="btn btn-outline btn-sm" id="btnGithubSyncBadge" onclick="openGithubModal()" title="Pengaturan GitHub Database Cloud">
+              <i data-lucide="github"></i> <span id="syncStatusLabel">GitHub Sync: Offline</span>
+            </button>
+            <button class="btn btn-outline-danger btn-sm" onclick="logoutAdmin()" title="Kembali ke Tampilan Pengunjung">
+              <i data-lucide="log-out"></i> Keluar Mode Admin
+            </button>
+          </div>
         </div>
       </div>
 
@@ -297,7 +323,7 @@
             </div>
           </div>
           <div class="reclub-buttons">
-            <a href="https://reclub.co" target="_blank" class="btn btn-gold btn-md">
+            <a href="https://reclub.co/clubs/@family-padel-community" target="_blank" class="btn btn-gold btn-md">
               <i data-lucide="external-link"></i> Gabung FPC di Reclub App
             </a>
             <a href="#schedule" class="btn btn-outline-white btn-md">
@@ -363,11 +389,8 @@
       <div class="footer-links-col">
         <h4>Integrasi & Kontak</h4>
         <ul>
-          <li><a href="javascript:void(0)" onclick="openGithubModal()"><i data-lucide="github"></i> GitHub Cloud Sync</a></li>
-          <li><a href="https://reclub.co" target="_blank"><i data-lucide="external-link"></i> Reclub Profile</a></li>
-          <li><a href="https://wa.me/6281234567890" target="_blank"><i data-lucide="message-circle"></i> WhatsApp Admin FPC</a></li>
-          <li><a href="mailto:halo@familypadel.id"><i data-lucide="mail"></i> info@familypadel.id</a></li>
-          <li><a href="javascript:void(0)" onclick="resetSampleData()"><i data-lucide="rotate-ccw"></i> Reset Data Contoh</a></li>
+          <li><a href="https://reclub.co/clubs/@family-padel-community" target="_blank"><i data-lucide="external-link"></i> Reclub Official Club</a></li>
+          <li><a href="mailto:fpc.padel@gmail.com"><i data-lucide="mail"></i> fpc.padel@gmail.com</a></li>
         </ul>
       </div>
     </div>
@@ -378,6 +401,37 @@
       </div>
     </div>
   </footer>
+
+  <!-- MODAL: Verifikasi Akses Pengurus (Admin Gate) -->
+  <div class="modal-backdrop" id="adminAuthModal" onclick="handleBackdropClick(event, 'adminAuthModal')">
+    <div class="modal-box glass-panel" style="max-width: 420px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <i data-lucide="shield-alert" class="modal-icon text-gold"></i>
+          <div>
+            <h3>Verifikasi Pengurus FPC</h3>
+            <p>Masukkan PIN untuk mengelola jadwal mabar</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('adminAuthModal')"><i data-lucide="x"></i></button>
+      </div>
+
+      <form id="formAdminAuth" onsubmit="handleAdminAuthSubmit(event)">
+        <div class="form-group mb-3">
+          <label for="adminPinInput">PIN / Sandi Pengurus <span class="req">*</span></label>
+          <input type="password" id="adminPinInput" required placeholder="Masukkan PIN (Default: 1234)" autocomplete="current-password" autofocus>
+          <span class="text-xs text-muted mt-1">💡 <em>PIN bawaan awal: <strong>1234</strong> (dapat diubah kapan saja)</em></span>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('adminAuthModal')">Batal</button>
+          <button type="submit" class="btn btn-forest">
+            <i data-lucide="unlock"></i> Buka Akses Pengurus
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- MODAL: Input Jadwal Baru (Admin) -->
   <div class="modal-backdrop" id="adminModal" onclick="handleBackdropClick(event, 'adminModal')">
@@ -406,8 +460,21 @@
           </div>
 
           <div class="form-group">
-            <label for="schedTime">Waktu Main <span class="req">*</span></label>
-            <input type="text" id="schedTime" required placeholder="08:00 - 10:00 WIB" value="08:00 - 10:00 WIB">
+            <label>Waktu Main (Jam Mulai - Selesai) <span class="req">*</span></label>
+            <div class="time-range-picker">
+              <input type="time" id="schedStartTime" required value="19:00" class="time-input">
+              <span class="time-sep">&ndash;</span>
+              <input type="time" id="schedEndTime" required value="21:00" class="time-input">
+              <span class="time-tz">WIB</span>
+            </div>
+            <!-- Preset Pilihan Cepat -->
+            <div class="time-presets mt-1">
+              <span class="preset-tag" onclick="setTimePreset('07:00', '09:00')">07:00-09:00 (Pagi)</span>
+              <span class="preset-tag" onclick="setTimePreset('16:00', '18:00')">16:00-18:00 (Sore)</span>
+              <span class="preset-tag" onclick="setTimePreset('18:00', '20:00')">18:00-20:00 (Malam 1)</span>
+              <span class="preset-tag active" onclick="setTimePreset('19:00', '21:00')">19:00-21:00 (Malam 2)</span>
+              <span class="preset-tag" onclick="setTimePreset('20:00', '22:00')">20:00-22:00 (Malam 3)</span>
+            </div>
           </div>
 
           <div class="form-group">
@@ -418,6 +485,11 @@
           <div class="form-group">
             <label for="schedCourt">Nomor Lapangan</label>
             <input type="text" id="schedCourt" placeholder="Court 1 & 2" value="Court 1 (Panoramic)">
+          </div>
+
+          <div class="form-group">
+            <label for="schedCourtCountDuration">Jumlah Lapangan dan Durasi</label>
+            <input type="text" id="schedCourtCountDuration" placeholder="Contoh: 2 Lapangan (2 Jam)">
           </div>
 
           <div class="form-group">
@@ -432,17 +504,18 @@
 
           <div class="form-group">
             <label for="schedMaxPlayers">Slot Maksimal Pemain <span class="req">*</span></label>
-            <input type="number" id="schedMaxPlayers" required min="2" max="16" value="4">
+            <input type="number" id="schedMaxPlayers" required min="1" value="4" placeholder="Contoh: 4, 8, 24, dst.">
           </div>
 
           <div class="form-group">
-            <label for="schedFee">Biaya per Orang (IDR) <span class="req">*</span></label>
-            <input type="number" id="schedFee" required min="0" step="5000" value="125000" placeholder="125000">
+            <label for="schedFee">Biaya per Orang <span class="req">*</span></label>
+            <input type="text" id="schedFee" required value="99.000" placeholder="Contoh: 99.000 atau Rp 99.000">
           </div>
 
           <div class="form-group">
-            <label for="schedReclubUrl">Link Reclub Event (Opsional)</label>
-            <input type="url" id="schedReclubUrl" placeholder="https://reclub.co/events/..." value="https://reclub.co">
+            <label for="schedReclubUrl">Link Reclub Event Sesi Ini <span class="req">*</span></label>
+            <input type="url" id="schedReclubUrl" required placeholder="https://reclub.co/events/..." value="https://reclub.co/clubs/@family-padel-community">
+            <span class="text-xs text-muted">💡 <em>Pemain yang mengklik "Join Sesi di Reclub" akan langsung diarahkan ke link ini.</em></span>
           </div>
 
           <div class="form-group full-width">
@@ -579,7 +652,7 @@
               <p class="text-xs">
                 Apakah Anda ingin sesi ini langsung tercatat di profil Reclub Anda?
               </p>
-              <a id="btnDirectReclubLink" href="https://reclub.co" target="_blank" class="btn btn-xs btn-outline-gold w-100 mt-1">
+              <a id="btnDirectReclubLink" href="https://reclub.co/clubs/@family-padel-community" target="_blank" class="btn btn-xs btn-outline-gold w-100 mt-1">
                 <i data-lucide="external-link"></i> Buka Event di Reclub App
               </a>
             </div>

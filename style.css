@@ -441,6 +441,17 @@ h1, h2, h3, h4, h5 {
   border-color: #ffffff;
 }
 
+.btn-outline-danger {
+  background: transparent;
+  border: 1.5px solid #ef4444;
+  color: #ef4444;
+}
+
+.btn-outline-danger:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
 .btn-glass {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(8px);
@@ -2019,9 +2030,128 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
+/* ADMIN ACCESS & STATUS BAR (CLEAR & VISIBLE) */
+.admin-access-bar {
+  background: #ffffff;
+  border: 1.5px solid rgba(201, 162, 77, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 0.9rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-normal);
+}
+
+.admin-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-bar-info {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.875rem;
+  color: var(--fpc-forest-dark);
+}
+
+.admin-bar-info i {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.admin-active-bar {
+  background: #f1f8f4;
+  border-radius: var(--radius-md);
+  padding: 0.35rem;
+}
+
+.admin-bar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* TIME RANGE PICKER & PRESETS */
+.time-range-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.time-range-picker .time-input {
+  flex: 1;
+  cursor: pointer;
+  padding: 0.55rem 0.65rem;
+}
+
+.time-sep {
+  font-weight: 800;
+  color: var(--fpc-text-muted);
+}
+
+.time-tz {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--fpc-forest);
+  background: var(--fpc-forest-subtle);
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.5px;
+}
+
+.time-presets {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.preset-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #f1f5f3;
+  color: var(--fpc-forest-dark);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: 1px solid var(--fpc-border);
+  transition: var(--transition-fast);
+}
+
+.preset-tag:hover, .preset-tag.active {
+  background: var(--fpc-forest);
+  color: #ffffff;
+  border-color: var(--fpc-forest);
+}
+
 .status-indicator-dot.syncing {
   background: #f59e0b;
   animation: pulse 1s infinite;
+}
+
+/* RECLUB SLOT NOTICE (URGENCY CALL-TO-ACTION) */
+.reclub-slot-notice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, rgba(201, 162, 77, 0.15), rgba(201, 162, 77, 0.08));
+  border: 1px solid rgba(201, 162, 77, 0.4);
+  color: #855d14;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-sm);
+  margin-top: 0.5rem;
+}
+
+.notice-flame-icon {
+  width: 16px;
+  height: 16px;
+  color: #ea580c;
+  flex-shrink: 0;
 }
 
 @keyframes pulse {

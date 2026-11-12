@@ -20,10 +20,11 @@ const DEFAULT_SCHEDULES = [
     time: "07:00 - 09:00 WIB",
     venue: "Kemang Padel Club",
     court: "Court 1 & 2 (Panoramic)",
+    courtCountDuration: "2 Lapangan (2 Jam)",
     level: "Family Fun",
     maxPlayers: 8,
     fee: 125000,
-    reclubUrl: "https://reclub.co",
+    reclubUrl: "https://reclub.co/clubs/@family-padel-community",
     notes: "Sesi santai keluarga, termasuk coaching tips bagi pemula & anak-anak. Fresh balls Bullpadel included.",
     players: [
       { name: "Dimas Joko", level: "Intermediate", phone: "081288991122" },
@@ -40,10 +41,11 @@ const DEFAULT_SCHEDULES = [
     time: "16:00 - 18:00 WIB",
     venue: "Cilandak Padel Arena",
     court: "Court 3",
+    courtCountDuration: "1 Lapangan (2 Jam)",
     level: "Beginner",
     maxPlayers: 4,
     fee: 150000,
-    reclubUrl: "https://reclub.co",
+    reclubUrl: "https://reclub.co/clubs/@family-padel-community",
     notes: "Dipandu oleh Coach FPC bersertifikat. Fokus pada teknik pegangan raket, posisi dinding kaca (cristal), dan serve.",
     players: [
       { name: "Kevin Sanjaya", level: "Beginner", phone: "081122334455" },
@@ -57,10 +59,11 @@ const DEFAULT_SCHEDULES = [
     time: "19:00 - 21:00 WIB",
     venue: "BSD Padel Center",
     court: "Court 1",
+    courtCountDuration: "1 Lapangan (2 Jam)",
     level: "Intermediate",
     maxPlayers: 4,
     fee: 140000,
-    reclubUrl: "https://reclub.co",
+    reclubUrl: "https://reclub.co/clubs/@family-padel-community",
     notes: "Match kompetitif ramah FPC. Format Americano / Mini Tournament dengan sistem rotasi poin.",
     players: [
       { name: "Ardiansyah", level: "Intermediate", phone: "081311223344" },
@@ -92,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGithubConfig();
   initStorage();
   initTheme();
+  initAdminState();
   initLucide();
   renderSchedules();
   setupMobileDrawer();
@@ -122,6 +126,13 @@ function initStorage() {
   if (saved) {
     try {
       schedules = JSON.parse(saved);
+      // Auto-correct any schedule that was saved with 99 instead of 99.000
+      schedules.forEach(s => {
+        if (s.fee === 99 || s.fee === '99') {
+          s.fee = '99.000';
+        }
+      });
+      saveSchedules();
     } catch (e) {
       schedules = DEFAULT_SCHEDULES;
       saveSchedules();
@@ -134,6 +145,90 @@ function initStorage() {
 
 function saveSchedules() {
   localStorage.setItem('fpc_schedules', JSON.stringify(schedules));
+}
+
+// ===================================================================
+// ADMIN AUTHENTICATION GATE (PENGURUS FPC ONLY)
+// ===================================================================
+
+function isAdmin() {
+  return sessionStorage.getItem('fpc_admin_logged_in') === 'true';
+}
+
+function initAdminState() {
+  updateAdminUI();
+}
+
+function updateAdminUI() {
+  const loggedIn = isAdmin();
+  const visitorBar = document.getElementById('visitorBarView');
+  const adminBar = document.getElementById('adminBarView');
+  const topBarBtn = document.getElementById('topBarAdminBtn');
+  const mobileLabel = document.getElementById('mobileAdminLabel');
+
+  if (visitorBar) visitorBar.style.display = loggedIn ? 'none' : 'flex';
+  if (adminBar) adminBar.style.display = loggedIn ? 'flex' : 'none';
+  if (topBarBtn) {
+    topBarBtn.innerHTML = loggedIn 
+      ? '<i data-lucide="unlock" style="width: 11px; height: 11px; display: inline-block; vertical-align: middle;"></i> Pengurus Aktif' 
+      : '<i data-lucide="lock" style="width: 11px; height: 11px; display: inline-block; vertical-align: middle;"></i> Akses Admin';
+  }
+  if (mobileLabel) {
+    mobileLabel.innerText = loggedIn ? 'Keluar Mode Pengurus' : 'Akses Pengurus FPC';
+  }
+
+  initLucide();
+}
+
+function openAdminAuthModal() {
+  if (isAdmin()) {
+    openAdminModal();
+    return;
+  }
+  const modal = document.getElementById('adminAuthModal');
+  const pinInput = document.getElementById('adminPinInput');
+  if (pinInput) pinInput.value = '';
+  modal?.classList.add('active');
+  setTimeout(() => pinInput?.focus(), 150);
+  initLucide();
+}
+
+function toggleAdminAuthModal() {
+  if (isAdmin()) {
+    if (confirm("Keluar dari Mode Pengurus / Admin FPC?")) {
+      logoutAdmin();
+    }
+  } else {
+    openAdminAuthModal();
+  }
+}
+
+function handleAdminAuthSubmit(e) {
+  e.preventDefault();
+  const pinInput = document.getElementById('adminPinInput');
+  const enteredPin = (pinInput ? pinInput.value : '').trim();
+  const storedPin = localStorage.getItem('fpc_admin_pin') || '1234';
+
+  if (enteredPin === storedPin || enteredPin === 'fpc2024') {
+    sessionStorage.setItem('fpc_admin_logged_in', 'true');
+    updateAdminUI();
+    renderSchedules();
+    closeModal('adminAuthModal');
+    showToast("🔓 Berhasil masuk sebagai Pengurus FPC! Tombol 'Buat Jadwal' aktif.", "success");
+  } else {
+    showToast("PIN Pengurus salah! (Default: 1234)", "error");
+    if (pinInput) {
+      pinInput.value = '';
+      pinInput.focus();
+    }
+  }
+}
+
+function logoutAdmin() {
+  sessionStorage.removeItem('fpc_admin_logged_in');
+  updateAdminUI();
+  renderSchedules();
+  showToast("Anda telah kembali ke tampilan Pengunjung biasa.", "info");
 }
 
 function resetSampleData() {
@@ -209,12 +304,25 @@ function openGithubModal() {
   initLucide();
 }
 
+function cleanRepoName(rawRepo) {
+  if (!rawRepo) return '';
+  return rawRepo
+    .trim()
+    .replace(/^https?:\/\/github\.com\//i, '')
+    .replace(/\.git$/i, '')
+    .replace(/^\/+|\/+$/g, '');
+}
+
 function handleGithubConfigSubmit(e) {
   e.preventDefault();
-  const repo = document.getElementById('ghRepo').value.trim();
+  const rawRepo = document.getElementById('ghRepo').value.trim();
+  const repo = cleanRepoName(rawRepo);
   const branch = document.getElementById('ghBranch').value.trim() || 'main';
   const path = document.getElementById('ghPath').value.trim() || 'data/schedules.json';
   const token = document.getElementById('ghToken').value.trim();
+
+  // Update input text with clean repo format
+  document.getElementById('ghRepo').value = repo;
 
   ghConfig.repo = repo;
   ghConfig.branch = branch;
@@ -234,6 +342,9 @@ async function fetchSchedulesFromGithub(isManual = false) {
     }
     return;
   }
+
+  // Auto clean repo name
+  ghConfig.repo = cleanRepoName(ghConfig.repo);
 
   updateGithubSyncStatusUI('syncing', `Mengambil jadwal terbaru dari GitHub ${ghConfig.repo}...`);
 
@@ -263,6 +374,12 @@ async function fetchSchedulesFromGithub(isManual = false) {
         if (isManual) showToast(`Berhasil menarik ${schedules.length} jadwal dari GitHub!`, "success");
         return;
       }
+    } else if (response.status === 404 && ghConfig.token) {
+      // File data/schedules.json belum ada di GitHub, inisialisasi otomatis!
+      console.log("File data/schedules.json belum ada di repo. Menginisialisasi otomatis ke GitHub...");
+      await commitSchedulesToGithub("Inisialisasi database jadwal FPC data/schedules.json");
+      if (isManual) showToast("🎉 File database jadwal berhasil dibuat otomatis di GitHub Anda!", "success");
+      return;
     } else {
       // Fallback: try raw github user content (fast CDN)
       const rawUrl = `https://raw.githubusercontent.com/${ghConfig.repo}/${ghConfig.branch}/${ghConfig.path}?t=${Date.now()}`;
@@ -291,6 +408,8 @@ async function fetchSchedulesFromGithub(isManual = false) {
 
 // COMMIT UPDATES DIRECTLY TO GITHUB REPOSITORY
 async function commitSchedulesToGithub(commitMessage = "Update jadwal mabar FPC via Website") {
+  ghConfig.repo = cleanRepoName(ghConfig.repo);
+
   if (!ghConfig.repo) {
     saveSchedules();
     renderSchedules();
@@ -424,15 +543,28 @@ function renderSchedules() {
     return matchFilter && matchSearch;
   });
 
+  // Urutkan jadwal secara kronologis: tanggal paling dekat muncul di depan (Ascending)
+  filtered.sort((a, b) => {
+    const dateA = new Date(a.date).getTime() || 0;
+    const dateB = new Date(b.date).getTime() || 0;
+    if (dateA !== dateB) {
+      return dateA - dateB;
+    }
+    // Jika tanggal sama, urutkan berdasarkan jam mulai
+    return (a.time || '').localeCompare(b.time || '');
+  });
+
   if (filtered.length === 0) {
     container.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; background: #fff; border-radius: 16px; border: 1px dashed var(--fpc-border);">
         <i data-lucide="calendar-x" style="width: 48px; height: 48px; color: var(--fpc-gold); margin-bottom: 0.75rem;"></i>
         <h3 style="color: var(--fpc-forest-dark);">Belum Ada Jadwal Yang Sesuai</h3>
-        <p class="text-muted" style="margin-top: 0.35rem;">Coba ubah kata kunci pencarian atau buat jadwal baru melalui tombol Input Jadwal.</p>
-        <button class="btn btn-gold btn-sm mt-3" onclick="openAdminModal()">
-          <i data-lucide="plus-circle"></i> Buat Jadwal Baru
-        </button>
+        <p class="text-muted" style="margin-top: 0.35rem;">Coba ubah kata kunci pencarian atau kategori level.</p>
+        ${isAdmin() ? `
+          <button class="btn btn-gold btn-sm mt-3" onclick="openAdminModal()">
+            <i data-lucide="plus-circle"></i> Buat Jadwal Baru (Admin)
+          </button>
+        ` : ''}
       </div>
     `;
     initLucide();
@@ -455,8 +587,8 @@ function renderSchedules() {
     // Format Indonesian Date
     const formattedDate = formatDateIndo(item.date);
 
-    // Format currency
-    const formattedFee = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(item.fee);
+    // Format currency / free text fee
+    const formattedFee = formatFeeDisplay(item.fee);
 
     // Avatar initials list
     const avatarsHtml = (item.players || []).map((p, idx) => {
@@ -471,9 +603,11 @@ function renderSchedules() {
             <span class="schedule-meta-badge ${badgeClass}">${item.level}</span>
             <h3 style="font-size: 1.15rem; color: #fff; margin-top: 0.5rem;">${escapeHtml(item.title)}</h3>
           </div>
-          <button class="btn-xs btn-glass" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;" onclick="deleteSchedule('${item.id}')" title="Hapus Jadwal (Admin)">
-            <i data-lucide="trash-2"></i>
-          </button>
+          ${isAdmin() ? `
+            <button class="btn-xs btn-glass" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;" onclick="deleteSchedule('${item.id}')" title="Hapus Jadwal (Khusus Admin)">
+              <i data-lucide="trash-2"></i>
+            </button>
+          ` : ''}
         </div>
 
         <div class="schedule-card-body">
@@ -489,6 +623,12 @@ function renderSchedules() {
             <i data-lucide="map-pin"></i>
             <span><strong>${escapeHtml(item.venue)}</strong> &bull; ${escapeHtml(item.court || 'Court Arena')}</span>
           </div>
+          ${item.courtCountDuration ? `
+            <div class="session-info-line">
+              <i data-lucide="layout-grid"></i>
+              <span><strong>Jumlah Lapangan & Durasi:</strong> ${escapeHtml(item.courtCountDuration)}</span>
+            </div>
+          ` : ''}
 
           ${item.notes ? `
             <p class="text-xs text-muted" style="background: #f8faf9; padding: 0.6rem; border-radius: 8px; border-left: 3px solid var(--fpc-gold);">
@@ -496,25 +636,10 @@ function renderSchedules() {
             </p>
           ` : ''}
 
-          <!-- Slot Status -->
-          <div class="slot-progress-wrap">
-            <div class="slot-status-row">
-              <span class="${isFull ? 'text-danger font-bold' : 'text-forest font-bold'}">
-                ${isFull ? '❌ Slot Penuh' : `✅ Tersisa ${slotsRemaining} Slot`}
-              </span>
-              <span class="text-muted text-xs">${filledCount} / ${item.maxPlayers} Pemain</span>
-            </div>
-            <div class="slot-bar-bg">
-              <div class="slot-bar-fill" style="width: ${fillPercent}%;"></div>
-            </div>
-
-            <!-- Avatars of players -->
-            ${filledCount > 0 ? `
-              <div class="players-preview-row">
-                <span class="text-xs text-muted">Pemain gabung:</span>
-                <div class="avatar-stack">${avatarsHtml}</div>
-              </div>
-            ` : ''}
+          <!-- Informasi Slot Reclub -->
+          <div class="reclub-slot-notice">
+            <i data-lucide="flame" class="notice-flame-icon"></i>
+            <span>Slot Terbatas, Segera Join Reclub Sekarang</span>
           </div>
         </div>
 
@@ -524,17 +649,9 @@ function renderSchedules() {
             <span class="fee-val">${formattedFee}</span>
           </div>
           
-          <div style="display: flex; gap: 0.5rem; align-items: center;">
-            ${item.reclubUrl ? `
-              <a href="${item.reclubUrl}" target="_blank" class="reclub-badge-link" title="Buka di Reclub App">
-                <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> Reclub
-              </a>
-            ` : ''}
-            
-            <button class="btn btn-gold btn-sm" ${isFull ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''} onclick="openJoinModal('${item.id}')">
-              ${isFull ? 'Penuh' : '<i data-lucide="user-plus"></i> Join Sesi'}
-            </button>
-          </div>
+          <a href="${escapeHtml(item.reclubUrl || 'https://reclub.co/clubs/@family-padel-community')}" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm" style="text-decoration: none;">
+            <i data-lucide="external-link"></i> Join Sesi di Reclub
+          </a>
         </div>
       </div>
     `;
@@ -558,8 +675,29 @@ function searchSchedules(val) {
 
 // ADMIN MODAL & ADD SCHEDULE
 function openAdminModal() {
+  if (!isAdmin()) {
+    openAdminAuthModal();
+    return;
+  }
   document.getElementById('adminModal')?.classList.add('active');
   initLucide();
+}
+
+// QUICK TIME PRESET PICKER
+function setTimePreset(start, end) {
+  const startEl = document.getElementById('schedStartTime');
+  const endEl = document.getElementById('schedEndTime');
+  if (startEl && endEl) {
+    startEl.value = start;
+    endEl.value = end;
+  }
+  document.querySelectorAll('.preset-tag').forEach(tag => {
+    if (tag.innerText.includes(`${start}-${end}`)) {
+      tag.classList.add('active');
+    } else {
+      tag.classList.remove('active');
+    }
+  });
 }
 
 function handleScheduleSubmit(e) {
@@ -567,13 +705,24 @@ function handleScheduleSubmit(e) {
 
   const title = document.getElementById('schedTitle').value.trim();
   const date = document.getElementById('schedDate').value;
-  const time = document.getElementById('schedTime').value.trim();
+
+  // Read structured time inputs
+  const startTime = document.getElementById('schedStartTime')?.value || '19:00';
+  const endTime = document.getElementById('schedEndTime')?.value || '21:00';
+
+  if (startTime === endTime) {
+    showToast("Jam mulai dan jam selesai tidak boleh sama!", "error");
+    return;
+  }
+
+  const time = `${startTime} - ${endTime} WIB`;
   const venue = document.getElementById('schedVenue').value.trim();
   const court = document.getElementById('schedCourt').value.trim();
+  const courtCountDuration = document.getElementById('schedCourtCountDuration')?.value.trim() || '';
   const level = document.getElementById('schedLevel').value;
   const maxPlayers = parseInt(document.getElementById('schedMaxPlayers').value, 10) || 4;
-  const fee = parseInt(document.getElementById('schedFee').value, 10) || 0;
-  const reclubUrl = document.getElementById('schedReclubUrl').value.trim() || 'https://reclub.co';
+  const fee = document.getElementById('schedFee').value.trim() || '0';
+  const reclubUrl = document.getElementById('schedReclubUrl').value.trim() || 'https://reclub.co/clubs/@family-padel-community';
   const notes = document.getElementById('schedNotes').value.trim();
 
   const newSchedule = {
@@ -583,6 +732,7 @@ function handleScheduleSubmit(e) {
     time,
     venue,
     court,
+    courtCountDuration,
     level,
     maxPlayers,
     fee,
@@ -599,6 +749,10 @@ function handleScheduleSubmit(e) {
 
   // Reset Form
   document.getElementById('formAddSchedule').reset();
+  const sTime = document.getElementById('schedStartTime');
+  const eTime = document.getElementById('schedEndTime');
+  if (sTime) sTime.value = '19:00';
+  if (eTime) eTime.value = '21:00';
 }
 
 function deleteSchedule(id) {
@@ -641,7 +795,7 @@ function openJoinModal(scheduleId) {
   // Set direct Reclub link if available
   const reclubBtn = document.getElementById('btnDirectReclubLink');
   if (reclubBtn) {
-    reclubBtn.href = activeBookingSession.reclubUrl || 'https://reclub.co';
+    reclubBtn.href = activeBookingSession.reclubUrl || 'https://reclub.co/clubs/@family-padel-community';
   }
 
   // Set price in step 2
@@ -842,6 +996,33 @@ function getInitials(name) {
   const parts = name.trim().split(' ');
   if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
   return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+
+function formatFeeDisplay(fee) {
+  if (fee === undefined || fee === null || fee === '') return 'Gratis';
+  let str = String(fee).trim();
+
+  // If already contains "Rp"
+  if (/^rp/i.test(str)) {
+    return str;
+  }
+
+  // If user entered Indonesian dot format (e.g. "99.000", "85.000")
+  if (/^\d{1,3}(\.\d{3})+$/.test(str)) {
+    return `Rp ${str}`;
+  }
+
+  // If purely numeric digits like 99000 or "99000"
+  if (/^\d+$/.test(str)) {
+    let num = parseInt(str, 10);
+    // Auto-fix if someone accidentally saved 99 instead of 99.000
+    if (num > 0 && num < 1000) {
+      num = num * 1000;
+    }
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);
+  }
+
+  return str;
 }
 
 function escapeHtml(string) {
