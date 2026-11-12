@@ -99,12 +99,25 @@ function initStorage() {
   if (saved) {
     try {
       schedules = JSON.parse(saved);
-      // Auto-correct any schedule that was saved with 99 instead of 99.000
-      schedules.forEach(s => {
-        if (s.fee === 99 || s.fee === '99') {
-          s.fee = '99.000';
-        }
-      });
+
+      // Otomatis bersihkan jika browser pengunjung menyimpan cache data demo lama
+      const hasOldDemo = schedules.some(s => 
+        s.id === 'fpc-sched-101' || 
+        s.id === 'fpc-sched-102' || 
+        s.id === 'fpc-sched-103' || 
+        s.venue === 'Kemang Padel Club'
+      );
+
+      if (hasOldDemo) {
+        schedules = JSON.parse(JSON.stringify(DEFAULT_SCHEDULES));
+      } else {
+        // Auto-correct any schedule that was saved with 99 instead of 99.000
+        schedules.forEach(s => {
+          if (s.fee === 99 || s.fee === '99') {
+            s.fee = '99.000';
+          }
+        });
+      }
       saveSchedules();
     } catch (e) {
       schedules = DEFAULT_SCHEDULES;
@@ -182,7 +195,7 @@ function handleAdminAuthSubmit(e) {
   const enteredPin = (pinInput ? pinInput.value : '').trim();
   const storedPin = localStorage.getItem('fpc_admin_pin') || '1234';
 
-  if (enteredPin === storedPin || enteredPin === 'fpc2024') {
+  if (enteredPin === storedPin || enteredPin === 'fpc2026' || enteredPin === 'fpc2024') {
     sessionStorage.setItem('fpc_admin_logged_in', 'true');
     updateAdminUI();
     renderSchedules();
@@ -354,20 +367,44 @@ async function fetchSchedulesFromGithub(isManual = false) {
       if (isManual) showToast("🎉 File database jadwal berhasil dibuat otomatis di GitHub Anda!", "success");
       return;
     } else {
-      // Fallback: try raw github user content (fast CDN)
-      const rawUrl = `https://raw.githubusercontent.com/${ghConfig.repo}/${ghConfig.branch}/${ghConfig.path}?t=${Date.now()}`;
-      const rawResp = await fetch(rawUrl);
-      if (rawResp.ok) {
-        const rawJson = await rawResp.json();
-        if (Array.isArray(rawJson)) {
-          schedules = rawJson;
-          saveSchedules();
-          renderSchedules();
-          updateGithubSyncStatusUI('online');
-          if (isManual) showToast(`Berhasil memuat ${schedules.length} jadwal dari GitHub Raw!`, "success");
-          return;
+      // Fallback 1: try raw github user content (fast CDN)
+      try {
+        const rawUrl = `https://raw.githubusercontent.com/${ghConfig.repo}/${ghConfig.branch}/${ghConfig.path}?t=${Date.now()}`;
+        const rawResp = await fetch(rawUrl);
+        if (rawResp.ok) {
+          const rawJson = await rawResp.json();
+          if (Array.isArray(rawJson)) {
+            schedules = rawJson;
+            saveSchedules();
+            renderSchedules();
+            updateGithubSyncStatusUI('online');
+            if (isManual) showToast(`Berhasil memuat ${schedules.length} jadwal dari GitHub Raw!`, "success");
+            return;
+          }
         }
+      } catch (rawErr) {
+        console.warn("Raw github fetch error:", rawErr);
       }
+
+      // Fallback 2: try relative domain path (e.g. https://fpc.web.id/data/schedules.json)
+      try {
+        const relativeUrl = `./${ghConfig.path}?t=${Date.now()}`;
+        const relResp = await fetch(relativeUrl);
+        if (relResp.ok) {
+          const relJson = await relResp.json();
+          if (Array.isArray(relJson)) {
+            schedules = relJson;
+            saveSchedules();
+            renderSchedules();
+            updateGithubSyncStatusUI('online');
+            if (isManual) showToast(`Berhasil memuat ${schedules.length} jadwal dari web server!`, "success");
+            return;
+          }
+        }
+      } catch (relErr) {
+        console.warn("Relative path fetch error:", relErr);
+      }
+
       throw new Error(`Status ${response.status}: ${response.statusText}`);
     }
   } catch (err) {
