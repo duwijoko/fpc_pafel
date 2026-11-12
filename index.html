@@ -270,6 +270,9 @@
             <button class="btn btn-outline btn-sm" id="btnGithubSyncBadge" onclick="openGithubModal()" title="Pengaturan GitHub Database Cloud">
               <i data-lucide="github"></i> <span id="syncStatusLabel">GitHub Sync: Offline</span>
             </button>
+            <button class="btn btn-outline btn-sm" onclick="changeAdminPin()" title="Ubah PIN Pengurus">
+              <i data-lucide="key"></i> Ganti PIN
+            </button>
             <button class="btn btn-outline-danger btn-sm" onclick="logoutAdmin()" title="Kembali ke Tampilan Pengunjung">
               <i data-lucide="log-out"></i> Keluar Mode Admin
             </button>
@@ -419,8 +422,8 @@
       <form id="formAdminAuth" onsubmit="handleAdminAuthSubmit(event)">
         <div class="form-group mb-3">
           <label for="adminPinInput">PIN / Sandi Pengurus <span class="req">*</span></label>
-          <input type="password" id="adminPinInput" required placeholder="Masukkan PIN (Default: 1234)" autocomplete="current-password" autofocus>
-          <span class="text-xs text-muted mt-1">💡 <em>PIN bawaan awal: <strong>1234</strong> (dapat diubah kapan saja)</em></span>
+          <input type="password" id="adminPinInput" required placeholder="Masukkan PIN Pengurus" autocomplete="current-password" autofocus>
+          <span class="text-xs text-muted mt-1">🔒 <em>Akses terbatas khusus pengurus & admin resmi Family Padel Community.</em></span>
         </div>
 
         <div class="modal-footer">

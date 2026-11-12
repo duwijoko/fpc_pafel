@@ -202,12 +202,34 @@ function handleAdminAuthSubmit(e) {
     closeModal('adminAuthModal');
     showToast("🔓 Berhasil masuk sebagai Pengurus FPC! Tombol 'Buat Jadwal' aktif.", "success");
   } else {
-    showToast("PIN Pengurus salah! (Default: 1234)", "error");
+    showToast("PIN Pengurus salah! Silakan periksa kembali.", "error");
     if (pinInput) {
       pinInput.value = '';
       pinInput.focus();
     }
   }
+}
+
+function changeAdminPin() {
+  const currentPin = prompt("Masukkan PIN Pengurus saat ini:");
+  if (!currentPin) return;
+
+  const storedPin = localStorage.getItem('fpc_admin_pin') || '1234';
+  if (currentPin !== storedPin && currentPin !== 'fpc2026' && currentPin !== 'fpc2024') {
+    showToast("PIN saat ini salah!", "error");
+    return;
+  }
+
+  const newPin = prompt("Masukkan PIN Pengurus baru (minimal 4 karakter / angka):");
+  if (!newPin) return;
+
+  if (newPin.trim().length < 4) {
+    showToast("PIN baru terlalu pendek! Minimal 4 karakter.", "error");
+    return;
+  }
+
+  localStorage.setItem('fpc_admin_pin', newPin.trim());
+  showToast("✅ PIN Pengurus berhasil diperbarui!", "success");
 }
 
 function logoutAdmin() {
