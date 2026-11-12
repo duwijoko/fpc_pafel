@@ -14,31 +14,6 @@
     "players": []
   },
   {
-    "id": "fpc-sched-102",
-    "title": "Beginner Clinic & Rally Fundamentals",
-    "date": "2026-11-16",
-    "time": "16:00 - 18:00 WIB",
-    "venue": "Cilandak Padel Arena",
-    "court": "Court 3",
-    "level": "Beginner",
-    "maxPlayers": 4,
-    "fee": 150000,
-    "reclubUrl": "https://reclub.co",
-    "notes": "Dipandu oleh Coach FPC bersertifikat. Fokus pada teknik pegangan raket, posisi dinding kaca (cristal), dan serve.",
-    "players": [
-      {
-        "name": "Kevin Sanjaya",
-        "level": "Beginner",
-        "phone": "081122334455"
-      },
-      {
-        "name": "Nadia Utami",
-        "level": "Beginner",
-        "phone": "081233445566"
-      }
-    ]
-  },
-  {
     "id": "fpc-sched-103",
     "title": "Intermediate Competitive Sparring Night",
     "date": "2026-11-18",
