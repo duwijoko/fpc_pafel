@@ -14,46 +14,6 @@
     "players": []
   },
   {
-    "id": "fpc-sched-101",
-    "title": "Weekend Morning Family Padel & Fun Sparring",
-    "date": "2026-11-15",
-    "time": "07:00 - 09:00 WIB",
-    "venue": "Kemang Padel Club",
-    "court": "Court 1 & 2 (Panoramic)",
-    "level": "Family Fun",
-    "maxPlayers": 8,
-    "fee": 125000,
-    "reclubUrl": "https://reclub.co",
-    "notes": "Sesi santai keluarga, termasuk coaching tips bagi pemula & anak-anak. Fresh balls Bullpadel included.",
-    "players": [
-      {
-        "name": "Dimas Joko",
-        "level": "Intermediate",
-        "phone": "081288991122"
-      },
-      {
-        "name": "Sarah Amalia",
-        "level": "Beginner",
-        "phone": "081399882233"
-      },
-      {
-        "name": "Rian Pratama",
-        "level": "Intermediate",
-        "phone": "081512345678"
-      },
-      {
-        "name": "Citra Kirana",
-        "level": "Family Fun",
-        "phone": "081298765432"
-      },
-      {
-        "name": "Budi Santoso",
-        "level": "Beginner",
-        "phone": "081765432109"
-      }
-    ]
-  },
-  {
     "id": "fpc-sched-102",
     "title": "Beginner Clinic & Rally Fundamentals",
     "date": "2026-11-16",
