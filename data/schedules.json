@@ -12,35 +12,5 @@
     "reclubUrl": "https://reclub.co/id/m/PQQAZH",
     "notes": "Winner Get Prize, \nFree mineral water\nFresh Ball",
     "players": []
-  },
-  {
-    "id": "fpc-sched-103",
-    "title": "Intermediate Competitive Sparring Night",
-    "date": "2026-11-18",
-    "time": "19:00 - 21:00 WIB",
-    "venue": "BSD Padel Center",
-    "court": "Court 1",
-    "level": "Intermediate",
-    "maxPlayers": 4,
-    "fee": 140000,
-    "reclubUrl": "https://reclub.co",
-    "notes": "Match kompetitif ramah FPC. Format Americano / Mini Tournament dengan sistem rotasi poin.",
-    "players": [
-      {
-        "name": "Ardiansyah",
-        "level": "Intermediate",
-        "phone": "081311223344"
-      },
-      {
-        "name": "Fajar Alfian",
-        "level": "Intermediate",
-        "phone": "081422334455"
-      },
-      {
-        "name": "Hendra Setiawan",
-        "level": "Intermediate",
-        "phone": "081533445566"
-      }
-    ]
   }
 ]
