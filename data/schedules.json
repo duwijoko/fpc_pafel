@@ -1,5 +1,19 @@
 [
   {
+    "id": "fpc-sched-1794455448397",
+    "title": "BEGINNER ++ UPPER BEGINNER MENS ONLY",
+    "date": "2026-11-14",
+    "time": "19:00 - 21:00 WIB",
+    "venue": "SUNCOURT PADEL",
+    "court": "TBI (To Be Inform)",
+    "level": "Intermediate",
+    "maxPlayers": 8,
+    "fee": 85000,
+    "reclubUrl": "https://reclub.co/id/m/PQQAZH",
+    "notes": "Winner Get Prize, \nFree mineral water\nFresh Ball",
+    "players": []
+  },
+  {
     "id": "fpc-sched-101",
     "title": "Weekend Morning Family Padel & Fun Sparring",
     "date": "2026-11-15",
@@ -12,11 +26,31 @@
     "reclubUrl": "https://reclub.co",
     "notes": "Sesi santai keluarga, termasuk coaching tips bagi pemula & anak-anak. Fresh balls Bullpadel included.",
     "players": [
-      { "name": "Dimas Joko", "level": "Intermediate", "phone": "081288991122" },
-      { "name": "Sarah Amalia", "level": "Beginner", "phone": "081399882233" },
-      { "name": "Rian Pratama", "level": "Intermediate", "phone": "081512345678" },
-      { "name": "Citra Kirana", "level": "Family Fun", "phone": "081298765432" },
-      { "name": "Budi Santoso", "level": "Beginner", "phone": "081765432109" }
+      {
+        "name": "Dimas Joko",
+        "level": "Intermediate",
+        "phone": "081288991122"
+      },
+      {
+        "name": "Sarah Amalia",
+        "level": "Beginner",
+        "phone": "081399882233"
+      },
+      {
+        "name": "Rian Pratama",
+        "level": "Intermediate",
+        "phone": "081512345678"
+      },
+      {
+        "name": "Citra Kirana",
+        "level": "Family Fun",
+        "phone": "081298765432"
+      },
+      {
+        "name": "Budi Santoso",
+        "level": "Beginner",
+        "phone": "081765432109"
+      }
     ]
   },
   {
@@ -32,8 +66,16 @@
     "reclubUrl": "https://reclub.co",
     "notes": "Dipandu oleh Coach FPC bersertifikat. Fokus pada teknik pegangan raket, posisi dinding kaca (cristal), dan serve.",
     "players": [
-      { "name": "Kevin Sanjaya", "level": "Beginner", "phone": "081122334455" },
-      { "name": "Nadia Utami", "level": "Beginner", "phone": "081233445566" }
+      {
+        "name": "Kevin Sanjaya",
+        "level": "Beginner",
+        "phone": "081122334455"
+      },
+      {
+        "name": "Nadia Utami",
+        "level": "Beginner",
+        "phone": "081233445566"
+      }
     ]
   },
   {
@@ -49,9 +91,21 @@
     "reclubUrl": "https://reclub.co",
     "notes": "Match kompetitif ramah FPC. Format Americano / Mini Tournament dengan sistem rotasi poin.",
     "players": [
-      { "name": "Ardiansyah", "level": "Intermediate", "phone": "081311223344" },
-      { "name": "Fajar Alfian", "level": "Intermediate", "phone": "081422334455" },
-      { "name": "Hendra Setiawan", "level": "Intermediate", "phone": "081533445566" }
+      {
+        "name": "Ardiansyah",
+        "level": "Intermediate",
+        "phone": "081311223344"
+      },
+      {
+        "name": "Fajar Alfian",
+        "level": "Intermediate",
+        "phone": "081422334455"
+      },
+      {
+        "name": "Hendra Setiawan",
+        "level": "Intermediate",
+        "phone": "081533445566"
+      }
     ]
   }
 ]
