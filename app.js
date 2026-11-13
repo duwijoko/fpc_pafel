@@ -53,6 +53,17 @@ let currentSearchQuery = '';
 let activeBookingSession = null;
 let currentBookingData = null;
 let timerInterval = null;
+let showPastSchedules = false;
+
+// KEAMANAN KRIPTOGRAFI PIN (SHA-256 SATU ARAH - ZERO PLAINTEXT PASSWORD)
+// Hash resmi terenkripsi (tidak dapat dibaca/didekripsi balik oleh siapapun)
+const DEFAULT_PIN_HASH = '877160891292d0773c67dcc913b2c239546027813b4b1571ee322f1b752ca842';
+
+async function hashPin(pin) {
+  const enc = new TextEncoder().encode(pin);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 // GITHUB CLOUD DATABASE CONFIG & STATE
 let ghConfig = {
@@ -189,13 +200,16 @@ function toggleAdminAuthModal() {
   }
 }
 
-function handleAdminAuthSubmit(e) {
+async function handleAdminAuthSubmit(e) {
   e.preventDefault();
   const pinInput = document.getElementById('adminPinInput');
   const enteredPin = (pinInput ? pinInput.value : '').trim();
-  const storedPin = localStorage.getItem('fpc_admin_pin') || '1234';
+  if (!enteredPin) return;
 
-  if (enteredPin === storedPin || enteredPin === 'fpc2026' || enteredPin === 'fpc2024') {
+  const enteredHash = await hashPin(enteredPin);
+  const activeHash = localStorage.getItem('fpc_admin_pin_hash') || DEFAULT_PIN_HASH;
+
+  if (enteredHash === activeHash) {
     sessionStorage.setItem('fpc_admin_logged_in', 'true');
     updateAdminUI();
     renderSchedules();
@@ -210,12 +224,14 @@ function handleAdminAuthSubmit(e) {
   }
 }
 
-function changeAdminPin() {
+async function changeAdminPin() {
   const currentPin = prompt("Masukkan PIN Pengurus saat ini:");
   if (!currentPin) return;
 
-  const storedPin = localStorage.getItem('fpc_admin_pin') || '1234';
-  if (currentPin !== storedPin && currentPin !== 'fpc2026' && currentPin !== 'fpc2024') {
+  const currentHash = await hashPin(currentPin.trim());
+  const activeHash = localStorage.getItem('fpc_admin_pin_hash') || DEFAULT_PIN_HASH;
+
+  if (currentHash !== activeHash) {
     showToast("PIN saat ini salah!", "error");
     return;
   }
@@ -228,8 +244,10 @@ function changeAdminPin() {
     return;
   }
 
-  localStorage.setItem('fpc_admin_pin', newPin.trim());
-  showToast("✅ PIN Pengurus berhasil diperbarui!", "success");
+  const newHash = await hashPin(newPin.trim());
+  localStorage.setItem('fpc_admin_pin_hash', newHash);
+  localStorage.removeItem('fpc_admin_pin'); // Hapus data lama plaintext
+  showToast("✅ PIN Pengurus berhasil diubah & diamankan dengan enkripsi SHA-256!", "success");
 }
 
 function logoutAdmin() {
@@ -564,8 +582,17 @@ function renderSchedules() {
   const container = document.getElementById('scheduleCardsContainer');
   if (!container) return;
 
-  // Filter & Search
+  // Tanggal hari ini lokal (YYYY-MM-DD)
+  const now = new Date();
+  const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+  // Filter & Search (Otomatis sembunyikan jadwal yang tanggalnya sudah lewat)
   let filtered = schedules.filter(session => {
+    // Pengecekan tanggal kedaluwarsa
+    if (!showPastSchedules && session.date && session.date < todayStr) {
+      return false; // Otomatis sembunyikan jika tanggal sesi sudah lewat
+    }
+
     const matchFilter = (currentFilter === 'all') || (session.level.toLowerCase().includes(currentFilter.toLowerCase()));
     const q = currentSearchQuery.toLowerCase().trim();
     const matchSearch = !q || 
@@ -587,16 +614,29 @@ function renderSchedules() {
   });
 
   if (filtered.length === 0) {
+    const hasPast = schedules.some(s => s.date && s.date < todayStr);
     container.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; background: #fff; border-radius: 16px; border: 1px dashed var(--fpc-border);">
-        <i data-lucide="calendar-x" style="width: 48px; height: 48px; color: var(--fpc-gold); margin-bottom: 0.75rem;"></i>
-        <h3 style="color: var(--fpc-forest-dark);">Belum Ada Jadwal Yang Sesuai</h3>
-        <p class="text-muted" style="margin-top: 0.35rem;">Coba ubah kata kunci pencarian atau kategori level.</p>
-        ${isAdmin() ? `
-          <button class="btn btn-gold btn-sm mt-3" onclick="openAdminModal()">
-            <i data-lucide="plus-circle"></i> Buat Jadwal Baru (Admin)
-          </button>
-        ` : ''}
+      <div style="grid-column: 1 / -1; text-align: center; padding: 3.5rem 1.5rem; background: #fff; border-radius: 16px; border: 1px dashed var(--fpc-border); box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+        <i data-lucide="calendar-clock" style="width: 52px; height: 52px; color: var(--fpc-gold); margin-bottom: 1rem;"></i>
+        <h3 style="color: var(--fpc-forest-dark); font-size: 1.35rem;">Belum Ada Jadwal Sesi Mendatang</h3>
+        <p class="text-muted" style="margin-top: 0.5rem; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.6; font-size: 0.95rem;">
+          Semua sesi mabar terdekat telah selesai atau sedang dalam persiapan oleh Pengurus FPC. Silakan pantau terus jadwal sesi baru dan gabung klub FPC di aplikasi Reclub!
+        </p>
+        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+          <a href="https://reclub.co/clubs/@family-padel-community" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
+            <i data-lucide="external-link"></i> Buka Klub FPC di Reclub
+          </a>
+          ${isAdmin() ? `
+            <button class="btn btn-forest btn-sm" onclick="openAdminModal()">
+              <i data-lucide="plus-circle"></i> + Buat Jadwal Baru (Admin)
+            </button>
+            ${hasPast ? `
+              <button class="btn btn-outline btn-sm" onclick="togglePastSchedules()">
+                <i data-lucide="history"></i> ${showPastSchedules ? 'Sembunyikan Sesi Lalu' : 'Lihat Riwayat Sesi Lalu'}
+              </button>
+            ` : ''}
+          ` : ''}
+        </div>
       </div>
     `;
     initLucide();
@@ -703,6 +743,12 @@ function filterSchedules(category, element) {
 function searchSchedules(val) {
   currentSearchQuery = val;
   renderSchedules();
+}
+
+function togglePastSchedules() {
+  showPastSchedules = !showPastSchedules;
+  renderSchedules();
+  showToast(showPastSchedules ? "Menampilkan seluruh riwayat sesi (termasuk yang telah lewat)." : "Hanya menampilkan sesi mabar aktif mendatang.", "info");
 }
 
 // ADMIN MODAL & ADD SCHEDULE

@@ -153,6 +153,7 @@
         <a href="#schedule" class="nav-link"><i data-lucide="calendar"></i> Jadwal Main</a>
         <a href="#jersey" class="nav-link"><i data-lucide="shirt"></i> Jersey Kit</a>
         <a href="#venues" class="nav-link"><i data-lucide="map-pin"></i> Lokasi Venue</a>
+        <a href="#gallery" class="nav-link"><i data-lucide="camera"></i> Galeri</a>
         <a href="#community" class="nav-link"><i data-lucide="users"></i> Komunitas & Reclub</a>
         <a href="#schedule" class="btn btn-gold btn-sm">
           <i data-lucide="calendar-check"></i> Booking Slot
@@ -177,6 +178,7 @@
         <a href="#schedule" class="mobile-link" onclick="closeDrawer()"><i data-lucide="calendar"></i> Jadwal Main</a>
         <a href="#jersey" class="mobile-link" onclick="closeDrawer()"><i data-lucide="shirt"></i> Official Jersey</a>
         <a href="#venues" class="mobile-link" onclick="closeDrawer()"><i data-lucide="map-pin"></i> Lokasi Venue</a>
+        <a href="#gallery" class="mobile-link" onclick="closeDrawer()"><i data-lucide="camera"></i> Galeri Foto</a>
         <a href="#community" class="mobile-link" onclick="closeDrawer()"><i data-lucide="users"></i> Komunitas & Reclub</a>
         <a href="javascript:void(0)" class="mobile-link" id="mobileDrawerAdminLink" onclick="toggleAdminAuthModal(); closeDrawer();"><i data-lucide="shield-check"></i> <span id="mobileAdminLabel">Akses Pengurus FPC</span></a>
         <div class="drawer-footer">
@@ -390,6 +392,9 @@
             <button class="btn btn-outline btn-sm" id="btnGithubSyncBadge" onclick="openGithubModal()" title="Pengaturan GitHub Database Cloud">
               <i data-lucide="github"></i> <span id="syncStatusLabel">GitHub Sync: Offline</span>
             </button>
+            <button class="btn btn-outline btn-sm" onclick="togglePastSchedules()" title="Tampilkan / Sembunyikan Sesi Lalu">
+              <i data-lucide="history"></i> Riwayat Sesi
+            </button>
             <button class="btn btn-outline btn-sm" onclick="changeAdminPin()" title="Ubah PIN Pengurus">
               <i data-lucide="key"></i> Ganti PIN
             </button>
@@ -417,6 +422,99 @@
       <!-- Schedule Cards Grid -->
       <div class="schedule-grid" id="scheduleCardsContainer">
         <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Dokumentasi & Galeri Instagram FPC -->
+  <section class="section gallery-section" id="gallery">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-tag" style="background: rgba(201,162,77,0.15); color: var(--fpc-gold); border: 1px solid rgba(201,162,77,0.3);"><i data-lucide="camera"></i> Instagram Feed & Moments</span>
+        <h2 class="section-title">Dokumentasi Mabar & Galeri FPC</h2>
+        <div class="title-accent-bar"></div>
+        <p class="section-subtitle">
+          Potret kebersamaan, keceriaan keluarga, dan aksi seru di lapangan dari akun Instagram resmi <strong>@familypadelcommunity</strong>.
+        </p>
+      </div>
+
+      <!-- Action: Follow on Instagram Badge -->
+      <div class="gallery-header-action">
+        <a href="https://www.instagram.com/familypadelcommunity" target="_blank" rel="noopener noreferrer" class="instagram-follow-badge">
+          <img src="assets/images/logo-fpc.jpg" alt="FPC Instagram Avatar">
+          <span><strong>@familypadelcommunity</strong> di Instagram</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--fpc-gold); margin-left: 0.25rem;">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Widget Feed Otomatis / Live Gallery Showcase (5 Foto Terbaru) -->
+      <div class="gallery-container-box">
+        <!-- Container untuk Widget Feed Otomatis (Behold / Elfsight / SnapWidget) -->
+        <div id="instagramFeedWidget" class="gallery-grid">
+          <!-- Item 1 -->
+          <a href="https://www.instagram.com/familypadelcommunity" target="_blank" rel="noopener noreferrer" class="gallery-item">
+            <img src="assets/images/jersey-home.jpg" alt="Dokumentasi Mabar FPC 1" loading="lazy">
+            <div class="gallery-overlay">
+              <div class="gallery-caption">Sesi Mabar Ceria & Family Sparring FPC</div>
+              <div class="gallery-meta">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                <span>Lihat di Instagram</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Item 2 -->
+          <a href="https://www.instagram.com/familypadelcommunity" target="_blank" rel="noopener noreferrer" class="gallery-item">
+            <img src="assets/images/jersey-away.jpg" alt="Dokumentasi Mabar FPC 2" loading="lazy">
+            <div class="gallery-overlay">
+              <div class="gallery-caption">Official Kit On Court • Semangat Padel</div>
+              <div class="gallery-meta">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                <span>Lihat di Instagram</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Item 3 -->
+          <a href="https://www.instagram.com/familypadelcommunity" target="_blank" rel="noopener noreferrer" class="gallery-item">
+            <img src="assets/images/logo-fpc.jpg" alt="Dokumentasi Mabar FPC 3" loading="lazy">
+            <div class="gallery-overlay">
+              <div class="gallery-caption">Sharing Fundamental Pemula & Newbies</div>
+              <div class="gallery-meta">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                <span>Lihat di Instagram</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Item 4 -->
+          <a href="https://www.instagram.com/familypadelcommunity" target="_blank" rel="noopener noreferrer" class="gallery-item">
+            <img src="assets/images/jersey-home.jpg" alt="Dokumentasi Mabar FPC 4" loading="lazy">
+            <div class="gallery-overlay">
+              <div class="gallery-caption">Weekend Morning Sparring Cibubur & Depok</div>
+              <div class="gallery-meta">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                <span>Lihat di Instagram</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Item 5 -->
+          <a href="https://www.instagram.com/familypadelcommunity" target="_blank" rel="noopener noreferrer" class="gallery-item">
+            <img src="assets/images/jersey-away.jpg" alt="Dokumentasi Mabar FPC 5" loading="lazy">
+            <div class="gallery-overlay">
+              <div class="gallery-caption">Silaturahmi & Coffee Gathering Selepas Mabar</div>
+              <div class="gallery-meta">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                <span>Lihat di Instagram</span>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -615,6 +713,7 @@
           <li><a href="#schedule">Jadwal Sesi & Booking</a></li>
           <li><a href="#jersey">Filosofi Jersey</a></li>
           <li><a href="#venues">Lokasi Venue Mabar</a></li>
+          <li><a href="#gallery">Galeri Foto Mabar</a></li>
           <li><a href="https://bit.ly/pemesananjerseyFPC" target="_blank" rel="noopener noreferrer"><i data-lucide="shopping-bag" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> Pesan Official Jersey</a></li>
         </ul>
       </div>

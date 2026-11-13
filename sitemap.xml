@@ -25,6 +25,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://fpc.web.id/#gallery</loc>
+    <lastmod>2026-11-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://fpc.web.id/#venues</loc>
     <lastmod>2026-11-13</lastmod>
     <changefreq>weekly</changefreq>

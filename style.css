@@ -2293,3 +2293,139 @@ h1, h2, h3, h4, h5 {
   border-radius: 6px;
   font-weight: 500;
 }
+
+/* ===================================================================
+   INSTAGRAM GALLERY SECTION STYLING
+   =================================================================== */
+.gallery-section {
+  background: linear-gradient(180deg, #07221a 0%, #0d3b2e 100%);
+  color: #ffffff;
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-section .section-title {
+  color: #ffffff;
+}
+
+.gallery-section .section-subtitle {
+  color: var(--fpc-gold-light);
+  opacity: 0.9;
+}
+
+.gallery-header-action {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.instagram-follow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.6rem 1.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(201, 162, 77, 0.4);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  text-decoration: none;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.instagram-follow-badge:hover {
+  background: rgba(201, 162, 77, 0.25);
+  border-color: var(--fpc-gold);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.instagram-follow-badge img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--fpc-gold);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.15rem;
+}
+
+@media (max-width: 992px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: block;
+  text-decoration: none;
+}
+
+.gallery-item:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--fpc-gold);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(7, 34, 26, 0.95) 0%, rgba(13, 59, 46, 0.4) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.gallery-caption {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.35;
+  margin-bottom: 0.35rem;
+}
+
+.gallery-meta {
+  font-size: 0.72rem;
+  color: var(--fpc-gold-light);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
